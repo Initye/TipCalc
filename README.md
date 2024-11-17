@@ -1,1 +1,1 @@
-Created by following Android Kotlin Course 
+Created by following Android Kotlin Course.
