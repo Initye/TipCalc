@@ -56,6 +56,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.tiptime.ui.theme.TipTimeTheme
 import java.text.NumberFormat
 
@@ -85,7 +86,8 @@ fun TipTimeLayout() {
 
     var roundUp by remember { mutableStateOf(false) }
 
-    val tip = calculateTip(amount, tipPercent, roundUp)
+    val (tip, total) = calculateTip(amount, tipPercent, roundUp)
+
 
 
     Column(
@@ -136,10 +138,17 @@ fun TipTimeLayout() {
 
         Text(
             text = stringResource(R.string.tip_amount, tip),
-            style = MaterialTheme.typography.displaySmall
+            style = MaterialTheme.typography.displaySmall,
+            fontSize = 25.sp
         )
 
+        Text(
+            text = stringResource(R.string.total_amount, total),
+            style = MaterialTheme.typography.displaySmall,
+            fontSize = 30.sp
+        )
 
+        Text("Amount: $amount, Tip: $tip, Total: $total")
         Spacer(modifier = Modifier.height(150.dp))
 
     }
@@ -189,25 +198,27 @@ fun EditNumberField(
         modifier = modifier
     )
 }
+
 /**
  * Calculates the tip based on the user input and format the tip amount
  * according to the local currency.
  * Example would be "$10.00".
  */
 
-@VisibleForTesting
-internal fun calculateTip(amount: Double, tipPercent: Double = 15.0, roundUp: Boolean): String {
-    var tip = tipPercent / 100 * amount
+internal fun calculateTip(amount: Double, tipPercent: Double = 15.0, roundUp: Boolean): Pair<String, String> {
+    var tip = (tipPercent / 100) * amount
 
     if (roundUp) {
         tip = kotlin.math.ceil(tip)
     }
 
-    return NumberFormat.getCurrencyInstance().format(tip)
+    val totalCost = amount + tip
 
-
+    return Pair(
+        NumberFormat.getCurrencyInstance().format(tip),
+        NumberFormat.getCurrencyInstance().format(totalCost)
+    )
 }
-
 
 
 @Preview(showBackground = true)
