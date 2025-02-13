@@ -1,6 +1,6 @@
 This app allows you to quickly calculate the tip based on a percentage and the amount of money you spent.
 
-#How to use
+# How to use
 - Enter the total bill amount of your bill.
 - Enter the desired tip percentage.
 - View calculated tip with round up or not.
