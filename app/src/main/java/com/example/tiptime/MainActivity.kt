@@ -47,6 +47,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -78,13 +79,13 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun TipTimeLayout() {
-    var amountInput by remember {mutableStateOf("")} //mutableStateOf("0") also can be used here
+    var amountInput by rememberSaveable {mutableStateOf("")} //mutableStateOf("0") also can be used here
     val amount = amountInput.toDoubleOrNull() ?: 0.0
 
-    var tipInput by remember {mutableStateOf("")}
+    var tipInput by rememberSaveable {mutableStateOf("")}
     val tipPercent = tipInput.toDoubleOrNull() ?: 0.0
 
-    var roundUp by remember { mutableStateOf(false) }
+    var roundUp by rememberSaveable { mutableStateOf(false) }
 
     val (tip, total) = calculateTip(amount, tipPercent, roundUp)
 
